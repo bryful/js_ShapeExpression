@@ -83,8 +83,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="shapeExpression.jsx" />
-    <Content Include="スクリプト作成アシスタント.jsx" />
+    <Content Include="ScriptCode\shapeExpression.jsx" />
+    <Content Include="ScriptCode\スクリプト作成アシスタント.jsx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

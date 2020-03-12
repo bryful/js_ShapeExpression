@@ -20,7 +20,7 @@ createRelativeボタンで相対パスを作成します。
 
 # ファイル
 C#のソースはUIをデザインするコードが入っています。使用にはAE_Dialogs_dueが必要です。  
-  shapeExpression.jsxがスクリプトです。js_ShapeExpressionフォルダ内に入っています。スクリプト作成アシスタント.jsxはスクリプトやExpression作成に必要な情報を獲得するスクリプトのCC2020版です。  
+  shapeExpression.jsxがスクリプトです。js_ShapeExpression/ScriptCodeフォルダ内に入っています。スクリプト作成アシスタント.jsxはスクリプトやExpression作成に必要な情報を獲得するスクリプトのCC2020版です。  
 
 # Dependency
 Visual studio 2017 C#  
