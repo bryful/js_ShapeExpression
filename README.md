@@ -1,6 +1,6 @@
 # ShapeExpression
 after effects でexpressionは基本的に絶対パスでプロパティのリンクを行います。  
-ShapeLayerでExpressionを使う時に絶対パスでは不都合が送ることが多々あります。  
+ShapeLayerでExpressionを使う時に絶対パスでは不都合が多々あります。  
 
 thisProperty.propertyGroup(*)を使えば、一応相対パスでリンクすることが可能ですが、基本的にインデックス指定になってしまいます。それだとかなりコーディングがきついです。  
 
@@ -20,7 +20,9 @@ createRelativeボタンで相対パスを作成します。
 
 # ファイル
 C#のソースはUIをデザインするコードが入っています。使用にはAE_Dialogs_dueが必要です。  
-  shapeExpression.jsxがスクリプトです。js_ShapeExpression/ScriptCodeフォルダ内に入っています。スクリプト作成アシスタント.jsxはスクリプトやExpression作成に必要な情報を獲得するスクリプトのCC2020版です。  
+  shapeExpression.jsxがスクリプトです。  
+<b>js_ShapeExpression/ScriptCode</b>フォルダ内に入っています。  
+スクリプト作成アシスタント.jsxはスクリプトやExpression作成に必要な情報を獲得するスクリプトのCC2020版です。  
 
 # Dependency
 Visual studio 2017 C#  
