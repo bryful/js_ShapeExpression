@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.960
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "js_ShapeExpression", "js_ShapeExpression\js_ShapeExpression.csproj", "{2B3D47C9-3E13-47A3-93C9-E4E17CF9A5A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "js_ShapeAssist", "js_ShapeAssist\js_ShapeAssist.csproj", "{1544AFFD-7AA8-46C8-8D7A-A587FCBCAB0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2B3D47C9-3E13-47A3-93C9-E4E17CF9A5A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B3D47C9-3E13-47A3-93C9-E4E17CF9A5A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B3D47C9-3E13-47A3-93C9-E4E17CF9A5A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1544AFFD-7AA8-46C8-8D7A-A587FCBCAB0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1544AFFD-7AA8-46C8-8D7A-A587FCBCAB0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1544AFFD-7AA8-46C8-8D7A-A587FCBCAB0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1544AFFD-7AA8-46C8-8D7A-A587FCBCAB0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
