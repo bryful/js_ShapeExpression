@@ -1,0 +1,8 @@
+  2020/03/13 23:12:15 : コンポジションﾞ台形1ﾞの開始
+
+  出力先 : C:\Users\bryfu\Documents\Visual Studio 2017\Projects\js_ShapeExpression\js_ShapeAssist\ScriptCode\(ShapeAssist)\台形1_cc2020.png    2020/03/13 23:12:15 : コンポジションﾞ台形1ﾞの終了
+
+
+  合計経過時間 : 0 秒
+ログは2020/03/13、23:12:15に閉じられました。
+

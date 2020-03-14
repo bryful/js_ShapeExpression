@@ -1,5 +1,10 @@
 ﻿(function(me){
-	var iconsFiles = []; //アイコンファイルのパス配列	var iconsFunc = [];//プリセット/jsxファイルのパス配列	var icons = []; // imageの配列		//----------------------------------
+
+	var iconsFiles = []; //アイコンファイルのパス配列
+	var iconsFunc = [];//プリセット/jsxファイルのパス配列
+	var icons = []; // imageの配列
+	
+	//----------------------------------
 	//prototype登録
 	String.prototype.trim = function(){
 		if (this=="" ) return ""
@@ -30,17 +35,77 @@
 	
 	//----------------------------------
 	var scriptName = File.decode($.fileName.getName().changeExt(""));
-	var targetFolder = new Folder ( $.fileName.getParent() + "/(" +$.fileName.getName().changeExt("")+ ")");	// ************************************************************************
-	var iconLoad = function()	{		var ret = false;		iconsFiles = []; //アイコンファイルのパス配列		iconsFunc = [];//プリセットファイルのパス配列		if (targetFolder.exists == false) {			alert("フォルダがないです");			return ret;		}		var pngFiles = f.getFiles("*.png");		if (pngFiles.length <=0) {			alert("pngファイルがないです");			return ret;		}		// ffx/jsxを探す		for ( var i = 0; i<pngFiles.length; i++){			var jsx = new File( pngFiles[i].fullName.changeExt(".jsx"));			var ffx = new File( pngFiles[i].fullName.changeExt(".ffx"));			if (jsx.exists == true) {				iconsFiles.push(pngFiles[i]);				ffx.isFFX = false;				ffx.isJSX = true;				iconsFunc.push(ffx);			}else{				if (ffx.exists == true) {					iconsFiles.push(pngFiles[i]);					ffx.isFFX = true;					ffx.isJSX = false;					iconsFunc.push(ffx);				}			}		}		ret = (iconsFiles.length > 0);		if ( ret==false )		{			alert("jsx/ffxファイルがないです");		}		return ret;
-	}	iconLoad(targetFolder);	// ************************************************************************	var initIcons = function()	{
-		if (icons.length ==0) return;				for ( var i= icons.length-1; i>=0; i--)		{			icons[i].visible = false;			delete icons[i];			icons[i] = null;		}		icons = [];	}
+	var targetFolder = new Folder ( $.fileName.getParent() + "/(" +$.fileName.getName().changeExt("")+ ")");
+
+	// ************************************************************************
+	var iconLoad = function()
+	{
+		var ret = false;
+		iconsFiles = []; //アイコンファイルのパス配列
+		iconsFunc = [];//プリセットファイルのパス配列
+		if (targetFolder.exists == false) {
+			alert("フォルダがないです");
+			return ret;
+		}
+		var pngFiles = f.getFiles("*.png");
+		if (pngFiles.length <=0) {
+			alert("pngファイルがないです");
+			return ret;
+		}
+		// ffx/jsxを探す
+		for ( var i = 0; i<pngFiles.length; i++){
+			var jsx = new File( pngFiles[i].fullName.changeExt(".jsx"));
+			var ffx = new File( pngFiles[i].fullName.changeExt(".ffx"));
+			if (jsx.exists == true) {
+				iconsFiles.push(pngFiles[i]);
+				ffx.isFFX = false;
+				ffx.isJSX = true;
+				iconsFunc.push(ffx);
+			}else{
+				if (ffx.exists == true) {
+					iconsFiles.push(pngFiles[i]);
+					ffx.isFFX = true;
+					ffx.isJSX = false;
+					iconsFunc.push(ffx);
+				}
+			}
+		}
+		ret = (iconsFiles.length > 0);
+		if ( ret==false )
+		{
+			alert("jsx/ffxファイルがないです");
+		}
+		return ret;
+	}
+	iconLoad(targetFolder);
+	// ************************************************************************
+	var initIcons = function()
+	{
+		if (icons.length ==0) return;
+		
+		for ( var i= icons.length-1; i>=0; i--)
+		{
+			icons[i].visible = false;
+			delete icons[i];
+			icons[i] = null;
+		}
+		icons = [];
+	}
 	// ************************************************************************
 	var winObj = ( me instanceof Panel) ? me : new Window("palette", "ShapeAssist", [ 0,  0, 345,  360]  ,{resizeable:true, maximizeButton:true, minimizeButton:true});
 	// ************************************************************************
 	var btnCreateShapeLayer = winObj.add("button", [  15,   15,   15+ 320,   15+  25], "create shapeLayer" );
 	var iconImag01 = winObj.add("image", [  15,   59,   15+  50,   59+  50] /*, iconImag01*/ );
-	// ************************************************************************
-	var createIcons = function()	{		initIcons();		if (iconsFiles.length<=0) return;		for ( var i=0; i<iconsFiles.length; i++)		{		}	}
+
+	// ************************************************************************
+	var createIcons = function()
+	{
+		initIcons();
+		if (iconsFiles.length<=0) return;
+		for ( var i=0; i<iconsFiles.length; i++)
+		{
+		}
+	}
 	// ************************************************************************
 	var getActiveComp = function()
 	{
@@ -133,11 +198,21 @@
 	// ************************************************************************
 	btnCreateShapeLayer.onClick = createShapeLayer;
 	// ************************************************************************
-	var resizeWin = function()	{		var b = winObj.bounds;
+	var resizeWin = function()
+	{
+		var b = winObj.bounds;
 		var w = b[2] - b[0];
-		var h = b[3] - b[1];				var b2 = btnCreateShapeLayer.bounds;		b2[0] = 15;		b2[2] = b2[0] + (w - 30);		btnCreateShapeLayer.bounds = b2;		
-	}	resizeWin();
-	winObj.onResize = resizeWin;	//-------------------------------------------------------------------------
+		var h = b[3] - b[1];
+		
+		var b2 = btnCreateShapeLayer.bounds;
+		b2[0] = 15;
+		b2[2] = b2[0] + (w - 30);
+		btnCreateShapeLayer.bounds = b2;
+		
+	}
+	resizeWin();
+	winObj.onResize = resizeWin;
+	//-------------------------------------------------------------------------
 	if ( ( me instanceof Panel) == false){
 		winObj.center(); 
 		winObj.show();
