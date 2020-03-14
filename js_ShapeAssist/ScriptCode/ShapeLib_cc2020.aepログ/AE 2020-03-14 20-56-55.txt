@@ -1,0 +1,8 @@
+  2020/03/14 20:56:55 : コンポジションﾞstar1ﾞの開始
+
+  出力先 : C:\Users\bryfu\Documents\Visual Studio 2017\Projects\js_ShapeExpression\js_ShapeAssist\ScriptCode\(ShapeAssist)\star1_[#####].png    2020/03/14 20:56:56 : コンポジションﾞstar1ﾞの終了
+
+
+  合計経過時間 : 1 秒
+ログは2020/03/14、20:56:56に閉じられました。
+

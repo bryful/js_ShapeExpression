@@ -1,0 +1,8 @@
+  2020/03/14 21:04:19 : コンポジションﾞTriangle3ﾞの開始
+
+  出力先 : C:\Users\bryfu\Documents\Visual Studio 2017\Projects\js_ShapeExpression\js_ShapeAssist\ScriptCode\(ShapeAssist)\Triangle3_[#####].png    2020/03/14 21:04:19 : コンポジションﾞTriangle3ﾞの終了
+
+
+  合計経過時間 : 0 秒
+ログは2020/03/14、21:04:19に閉じられました。
+
