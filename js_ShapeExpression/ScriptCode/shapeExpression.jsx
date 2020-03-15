@@ -16,6 +16,10 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 	var basePath = [];
 
 	// ********************************************************************************
+	/*
+		アクティブなコンポジションを獲得
+	*/
+	// ********************************************************************************
 	var getActiveComp = function()
 	{
 		var ret = null;
@@ -57,32 +61,124 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 		}
 		app.endUndoGroup();
 	}
+	// ********************************************************************************
+	/*
+		スライダーエフェクト[open]を追加
+	*/
+	// ********************************************************************************
+	var addSilderOpen = function()
+	{
+		var ret = false;
+		
+		var ac = getActiveComp();
+		if (ac==null) return ret;
 
+		var  lyr = null;
+		
+		if (ac.selectedLayers.length>0)
+		{
+			lyr = ac.selectedLayers[0];
+		}
+
+		
+		app.beginUndoGroup("addSilderOpen");
+		var efg = lyr.property("ADBE Effect Parade");
+		var fx = null;
+		if (efg.canAddProperty("ADBE Slider Control")){
+			fx = efg.addProperty("ADBE Slider Control");
+			if (fx!=null) {
+				fx.name = "open";
+				fx.enabled =false;
+				fx.property(1).setValue(100);
+			}
+		}
+
+	}
 	// ********************************************************************************
-	var winObj = ( me instanceof Panel) ? me : new Window("palette", "ShapeExpression", [ 703,  320,  703+ 497,  320+ 360]  ,{resizeable:true, maximizeButton:true, minimizeButton:true});
+	/*
+		スライダーエフェクト[open]を追加
+	*/
 	// ********************************************************************************
-	var btnCreateShape = winObj.add("button", [  15,   15,   15+ 470,   15+  25], "create ShapeLayer" );
-	btnCreateShape.graphics.font = ScriptUI.newFont("Tahoma",ScriptUI.FontStyle.REGULAR, 11);
-	var btnGetTargetProperty = winObj.add("button", [  15,   80,   15+ 470,   80+  25], "get TargetProperty" );
-	btnGetTargetProperty.graphics.font = ScriptUI.newFont("Tahoma",ScriptUI.FontStyle.REGULAR, 11);
-	var edTargetPropery = winObj.add("edittext", [  15,  105,   15+ 470,  105+  50], "", { readonly:true, multiline:true, scrollable:true });
-	edTargetPropery.graphics.font = ScriptUI.newFont("Tahoma",ScriptUI.FontStyle.REGULAR, 19);
-	var btnGetBaseProperty = winObj.add("button", [  15,  165,   15+ 470,  165+  25], "get BaseProperty" );
-	btnGetBaseProperty.graphics.font = ScriptUI.newFont("Tahoma",ScriptUI.FontStyle.REGULAR, 11);
-	var edBaseProperty = winObj.add("edittext", [  15,  190,   15+ 470,  190+  50], "", { readonly:true, multiline:true, scrollable:true });
-	edBaseProperty.graphics.font = ScriptUI.newFont("Tahoma",ScriptUI.FontStyle.REGULAR, 19);
-	var btnCreateRelative = winObj.add("button", [  15,  250,   15+ 470,  250+  25], "create Relative Path" );
-	btnCreateRelative.graphics.font = ScriptUI.newFont("Tahoma",ScriptUI.FontStyle.REGULAR, 11);
-	var edRelative = winObj.add("edittext", [  15,  275,   15+ 470,  275+  50], "", { readonly:true, multiline:true, scrollable:true });
-	edRelative.graphics.font = ScriptUI.newFont("Tahoma",ScriptUI.FontStyle.REGULAR, 19);
-	var stCaption = winObj.add("statictext", [  12,   55,   12+ 519,   55+  25], "Expressionを相対パスで指定するスクリプト");
-	stCaption.graphics.font = ScriptUI.newFont("Tahoma",ScriptUI.FontStyle.REGULAR, 11);
+	var addColor = function()
+	{
+		var ret = false;
+		
+		var ac = getActiveComp();
+		if (ac==null) return ret;
+
+		var  lyr = null;
+		
+		if (ac.selectedLayers.length>0)
+		{
+			lyr = ac.selectedLayers[0];
+		}
+
+		
+		app.beginUndoGroup("addSilderOpen");
+		var efg = lyr.property("ADBE Effect Parade");
+		var fx = null;
+		if (efg.canAddProperty("ADBE Color Control")){
+			fx = efg.addProperty("ADBE Color Control");
+			if (fx!=null) {
+				fx.name = "color";
+				fx.enabled =false;
+				fx.property(1).setValue([234/255,7/255,87/255,1]);
+			}
+		}
+
+	}
+		// ********************************************************************************
+	/*
+	*/
+	// ********************************************************************************
+	var expressionOn = function()
+	{
+		var p = getProperty();
+		if (p==null) return;
+		
+		if (p.canSetExpression==true){
+			if (p.expression =="")
+			{
+				p.expression = "value";
+			}
+		}
+	}
+	// ********************************************************************************
+	var winObj = ( me instanceof Panel) ? me : new Window("palette", "ShapeExpression", [ 0,  0,  500,  450]  ,{resizeable:true, maximizeButton:true, minimizeButton:true});
+	// ********************************************************************************
+	var ctrl_xx = 15;
+	var ctrl_yy = 15;
+	var btnCreateShape = winObj.add("button",    [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+ 25], "create ShapeLayer" );
+	ctrl_yy += 35;
+	var btnAddSliderOpen = winObj.add("button",    [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+ 25], "add Effect Slider \"open\"" );
+	ctrl_yy += 35;
+	var btnAddColor = winObj.add("button",    [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+ 25], "add Effect Color" );
+	ctrl_yy += 35;
+	var btnExpressin = winObj.add("button",    [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+ 25], "Expression value" );
+	ctrl_yy += 35;
+	var stCaption = winObj.add("statictext",     [ctrl_xx, ctrl_yy, ctrl_xx + 519,   ctrl_yy +  25], "Expressionを相対パスで指定するスクリプト");
+	ctrl_yy += 30;
+	var btnGetTargetProperty = winObj.add("button", [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+25], "get TargetProperty" );
+	ctrl_yy += 25;
+	var edTargetPropery = winObj.add("edittext", [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+50], "", { readonly:true, multiline:true, scrollable:true });
+	ctrl_yy += 60;
+	var btnGetBaseProperty = winObj.add("button", [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+25], "get BaseProperty" );
+	ctrl_yy += 25;
+	var edBaseProperty = winObj.add("edittext", [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+50], "", { readonly:true, multiline:true, scrollable:true });
+	ctrl_yy += 60;
+	var btnCreateRelative = winObj.add("button", [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+25], "create Relative Path" );
+	ctrl_yy += 25;
+	var edRelative = winObj.add("edittext", [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+50], "", { readonly:true, multiline:true, scrollable:true });
+	ctrl_yy += 60;
 
 	// ********************************************************************************
 
 
 	// ********************************************************************************
 	cntrlTbl.push(btnCreateShape);
+	cntrlTbl.push(btnAddSliderOpen);
+	cntrlTbl.push(btnAddColor);
+	cntrlTbl.push(btnExpressin);
 	
 	cntrlTbl.push(btnGetTargetProperty);
 	cntrlTbl.push(edTargetPropery);
@@ -244,6 +340,9 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 	}
 	// ********************************************************************************
 	btnCreateShape.onClick = createShapeLayer;
+	btnAddSliderOpen.onClick = addSilderOpen;
+	btnAddColor.onClick = addColor;
+	btnExpressin.onClick = expressionOn;
 	btnGetTargetProperty.onClick = getTargetPath;
 	btnGetBaseProperty.onClick = getBasePath;
 	btnCreateRelative.onClick = createRelative;
@@ -259,8 +358,8 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 		{
 			var c = cntrlTbl[i];
 			var bs = c.bounds;
-			bs[0] = 15;
-			bs[2] = bs[0] + w - 25;
+			bs[0] = ctrl_xx;
+			bs[2] = bs[0] + w - ctrl_xx*2;
 			c.bounds = bs;
 		}
 	}
