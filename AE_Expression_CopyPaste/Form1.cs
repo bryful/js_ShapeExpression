@@ -19,6 +19,7 @@ namespace AE_Expression_CopyPaste
 {
     public partial class Form1 : Form
     {
+        private NavBar m_navBar = new NavBar();
         //-------------------------------------------------------------
         private List<string> expStr = new List<string>();
         private List<string> expCap = new List<string>();
@@ -29,6 +30,7 @@ namespace AE_Expression_CopyPaste
         public Form1()
         {
             InitializeComponent();
+            NavBarSetup();
         }
         /// <summary>
         /// コントロールの初期化はこっちでやる
@@ -36,6 +38,103 @@ namespace AE_Expression_CopyPaste
         protected override void InitLayout()
         {
             base.InitLayout();
+        }
+        //-------------------------------------------------------------
+        private void NavBarSetup()
+        {
+            m_navBar.Form = this;
+            m_navBar.SizeSet();
+            m_navBar.LocSet();
+            m_navBar.Show();
+
+        }
+        //-------------------------------------------------------------
+        private bool ExportExp(string s)
+        {
+            bool ret = false;
+            JsonPref pref = new JsonPref();
+            pref.SetStringArray("expStr", expStr.ToArray());
+            pref.SetStringArray("expCap", expCap.ToArray());
+            ret = pref.Save(s);
+            return ret;
+        }
+        //-------------------------------------------------------------
+        private string ExportFile = "expression.json";
+        private bool ExportExp()
+        {
+            bool ret = false;
+            SaveFileDialog sfd = new SaveFileDialog();
+
+            sfd.FileName = Path.GetFileName( ExportFile);
+            string p = Path.GetDirectoryName(ExportFile);
+            if (Directory.Exists(p) == false)
+            {
+                p = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            }
+            sfd.InitialDirectory = p;
+            sfd.Filter = "json(*.json)|*.json|すべてのファイル(*.*)|*.*";
+            sfd.FilterIndex = 1;
+            //タイトルを設定する
+            sfd.Title = "保存先のファイルを選択してください";
+            sfd.RestoreDirectory = true;
+            sfd.OverwritePrompt = true;
+            sfd.CheckPathExists = true;
+
+            //ダイアログを表示する
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                
+                ret = ExportExp(sfd.FileName);
+                if (ret) ExportFile = sfd.FileName;
+            }
+            return ret;
+        }
+        //-------------------------------------------------------------
+        private bool ImportExp(string s)
+        {
+            bool ret = false;
+            JsonPref pref = new JsonPref();
+
+            if (pref.Load(s) == false) return ret;
+            bool ok = false;
+            string[] sa = pref.GetStringArray("expStr", out ok);
+            if (ok) expStr = sa.ToList<string>();
+            string[] sb = pref.GetStringArray("expCap", out ok);
+            if (ok)
+            {
+                expCap = sb.ToList<string>();
+                listBox1.Items.Clear();
+                listBox1.Items.AddRange(sb);
+            }
+            return ret;
+        }
+        //-------------------------------------------------------------
+        private bool ImportExp()
+        {
+            bool ret = false;
+            OpenFileDialog ofd = new OpenFileDialog();
+
+            ofd.FileName = Path.GetFileName(ExportFile);
+            string p = Path.GetDirectoryName(ExportFile);
+            if (Directory.Exists(p) == false)
+            {
+                p = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            }
+            ofd.InitialDirectory = p;
+            ofd.Filter = "json(*.json)|*.json|すべてのファイル(*.*)|*.*";
+            ofd.FilterIndex = 1;
+            ofd.Title = "開くファイルを選択してください";
+            ofd.RestoreDirectory = true;
+            ofd.CheckFileExists = true;
+            ofd.CheckPathExists = true;
+
+            //ダイアログを表示する
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                ret = ImportExp(ofd.FileName);
+                if (ret) ExportFile = ofd.FileName;
+            }
+            return ret;
         }
         //-------------------------------------------------------------
         /// <summary>
@@ -55,24 +154,30 @@ namespace AE_Expression_CopyPaste
                 if (ok) this.Size = sz;
                 Point p = pref.GetPoint("Point", out ok);
                 if (ok) this.Location = p;
-                string[] sa = pref.GetStringArray("expStr", out ok);
-                if (ok) expStr = sa.ToList<string>();
-                string[] sb = pref.GetStringArray("expCap", out ok);
-                if (ok)
+                string exp = pref.GetString("ExportFile", out ok);
+                if (ok) ExportFile = exp;
+                if (File.Exists(ExportFile) == false)
                 {
-                    expCap = sb.ToList<string>();
-                    listBox1.Items.AddRange(sb);
+                    string dd = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                    ExportFile = Path.Combine(dd, "expression.json");
                 }
-
-
             }
             this.Text = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
+
+            string appName = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
+            string _filePath = Path.Combine(Application.UserAppDataPath, appName + "_exp.json");
+            string _exp = ExportFile;
+            ImportExp(_filePath);
+            _exp = ExportFile;
+
             if (listBox1.Items.Count<=0)
             {
-                AddExp("effect(\"open\")");
+                AddExp("effect(\"open\")(1)");
                 AddExp("p = effect(\"open\")/100; \r\n if (p<0) {p=0;} else if (p>1){p=1;}\r\n");
                 AddExp("value * effect(\"open\") / 100");
-                AddExp("Math.PI/180");
+                AddExp("if (effect(\"open\")(1) <0){\r\n0;\r\n}else{\r\nvalue;\r\n}\r\n");
+                AddExp("v = value;\r\nv[0] *= p;\r\nv;\r\n");
+                AddExp("* Math.PI/180");
                 AddExp("Math.sin(r * Math.PI/180)");
                 AddExp("Math.cos(r * Math.PI/180)");
                 AddExp("Math.tan(r * Math.PI/180)");
@@ -90,12 +195,12 @@ namespace AE_Expression_CopyPaste
             JsonPref pref = new JsonPref();
             pref.SetSize("Size", this.Size);
             pref.SetPoint("Point", this.Location);
-
-            string[] sa = new string[expStr.Count];
-
-            pref.SetStringArray("expStr", expStr.ToArray());
-            pref.SetStringArray("expCap", expCap.ToArray());
+            pref.SetString("ExportFile", ExportFile);
             pref.Save();
+
+            string appName = Path.GetFileNameWithoutExtension(Application.ExecutablePath);
+            string _filePath = Path.Combine(Application.UserAppDataPath, appName + "_exp.json");
+            ExportExp(_filePath);
 
         }
         //-------------------------------------------------------------
@@ -357,6 +462,28 @@ namespace AE_Expression_CopyPaste
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RemoveExec();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ImportExp();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(ExportFile))
+            {
+                ExportExp(ExportFile);
+            }
+            else
+            {
+                ExportExp();
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExportExp();
         }
 
         /*

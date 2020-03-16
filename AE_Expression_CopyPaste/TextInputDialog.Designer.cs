@@ -38,21 +38,26 @@
             // 
             // tbExpStr
             // 
+            this.tbExpStr.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbExpStr.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.tbExpStr.Font = new System.Drawing.Font("ＭＳ ゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.tbExpStr.ForeColor = System.Drawing.Color.White;
             this.tbExpStr.Location = new System.Drawing.Point(37, 66);
             this.tbExpStr.Multiline = true;
             this.tbExpStr.Name = "tbExpStr";
             this.tbExpStr.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbExpStr.Size = new System.Drawing.Size(712, 318);
+            this.tbExpStr.Size = new System.Drawing.Size(745, 347);
             this.tbExpStr.TabIndex = 0;
             this.tbExpStr.TextChanged += new System.EventHandler(this.tbExpCap_TextChanged);
             // 
             // BtnOK
             // 
+            this.BtnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BtnOK.Enabled = false;
-            this.BtnOK.Location = new System.Drawing.Point(623, 390);
+            this.BtnOK.Location = new System.Drawing.Point(656, 419);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(75, 23);
             this.BtnOK.TabIndex = 1;
@@ -61,8 +66,9 @@
             // 
             // BtnCancel
             // 
+            this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.BtnCancel.Location = new System.Drawing.Point(542, 390);
+            this.BtnCancel.Location = new System.Drawing.Point(575, 419);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(75, 23);
             this.BtnCancel.TabIndex = 2;
@@ -71,11 +77,14 @@
             // 
             // tbExpCap
             // 
+            this.tbExpCap.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbExpCap.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.tbExpCap.Font = new System.Drawing.Font("ＭＳ ゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.tbExpCap.ForeColor = System.Drawing.Color.White;
             this.tbExpCap.Location = new System.Drawing.Point(37, 41);
             this.tbExpCap.Name = "tbExpCap";
-            this.tbExpCap.Size = new System.Drawing.Size(712, 19);
+            this.tbExpCap.Size = new System.Drawing.Size(745, 23);
             this.tbExpCap.TabIndex = 3;
             this.tbExpCap.TextChanged += new System.EventHandler(this.tbExpCap_TextChanged);
             // 
@@ -90,29 +99,28 @@
             // 
             // btnREDO
             // 
-            this.btnREDO.Location = new System.Drawing.Point(39, 390);
+            this.btnREDO.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnREDO.Location = new System.Drawing.Point(39, 419);
             this.btnREDO.Name = "btnREDO";
             this.btnREDO.Size = new System.Drawing.Size(75, 23);
             this.btnREDO.TabIndex = 5;
             this.btnREDO.Text = "戻す";
             this.btnREDO.UseVisualStyleBackColor = true;
+            this.btnREDO.Click += new System.EventHandler(this.btnREDO_Click);
             // 
             // TextInputDialog
             // 
-            this.AcceptButton = this.BtnCancel;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.CancelButton = this.BtnCancel;
-            this.ClientSize = new System.Drawing.Size(779, 448);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(812, 477);
             this.Controls.Add(this.btnREDO);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbExpCap);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnOK);
             this.Controls.Add(this.tbExpStr);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TextInputDialog";

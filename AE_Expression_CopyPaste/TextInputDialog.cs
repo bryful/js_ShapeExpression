@@ -30,15 +30,15 @@ namespace AE_Expression_CopyPaste
             get
             {
                 string s = tbExpStr.Text;
-                s = s.Replace("\r", "\\r");
-                s = s.Replace("\n", "\\n");
+                //s = s.Replace("\r", "\\r");
+                //s = s.Replace("\n", "\\n");
                 return tbExpCap.Text;
             }
             set
             {
                 string s = value;
-                s = s.Replace("\\r", "\r");
-                s = s.Replace("\\n", "\n");
+                //s = s.Replace("\\r", "\r");
+                //s = s.Replace("\\n", "\n");
                 tbExpCap.Text = s;
                 cap = s;
             }
@@ -53,6 +53,12 @@ namespace AE_Expression_CopyPaste
         private void tbExpCap_TextChanged(object sender, EventArgs e)
         {
             BtnOK.Enabled = ((tbExpCap.Text != cap) || (tbExpStr.Text != exp));
+        }
+
+        private void btnREDO_Click(object sender, EventArgs e)
+        {
+            tbExpCap.Text = cap;
+            tbExpStr.Text = exp;
         }
     }
 }
