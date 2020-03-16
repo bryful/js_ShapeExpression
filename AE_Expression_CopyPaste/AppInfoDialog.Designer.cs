@@ -103,10 +103,10 @@
             // 
             this.lbProduct.AutoSize = true;
             this.lbProduct.BackColor = System.Drawing.Color.DarkGray;
-            this.lbProduct.Font = new System.Drawing.Font("MS UI Gothic", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lbProduct.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.lbProduct.Location = new System.Drawing.Point(155, 59);
             this.lbProduct.Name = "lbProduct";
-            this.lbProduct.Size = new System.Drawing.Size(97, 27);
+            this.lbProduct.Size = new System.Drawing.Size(75, 21);
             this.lbProduct.TabIndex = 6;
             this.lbProduct.Text = "bry-ful ";
             // 
@@ -136,6 +136,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "AppInfoDialog";
             this.Text = "AppInfoDialog";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.AppInfoDialog_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
