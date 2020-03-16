@@ -144,7 +144,7 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 		}
 	}
 	// ********************************************************************************
-	var winObj = ( me instanceof Panel) ? me : new Window("palette", "ShapeExpression", [ 0,  0,  500,  450]  ,{resizeable:true, maximizeButton:true, minimizeButton:true});
+	var winObj = ( me instanceof Panel) ? me : new Window("palette", "ShapeExpression", [ 0,  0,  500,  480]  ,{resizeable:true, maximizeButton:true, minimizeButton:true});
 	// ********************************************************************************
 	var ctrl_xx = 15;
 	var ctrl_yy = 15;
@@ -167,9 +167,12 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 	var edBaseProperty = winObj.add("edittext", [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+50], "", { readonly:true, multiline:true, scrollable:true });
 	ctrl_yy += 60;
 	var btnCreateRelative = winObj.add("button", [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+25], "create Relative Path" );
+	
 	ctrl_yy += 25;
 	var edRelative = winObj.add("edittext", [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+50], "", { readonly:true, multiline:true, scrollable:true });
 	ctrl_yy += 60;
+	var btnCopy = winObj.add("button", [ctrl_xx ,ctrl_yy,ctrl_xx + 470 ,ctrl_yy+25], "copy" );
+	ctrl_yy += 30;
 
 	// ********************************************************************************
 
@@ -188,6 +191,7 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 
 	cntrlTbl.push(btnCreateRelative);
 	cntrlTbl.push(edRelative);
+	cntrlTbl.push(btnCopy);
 
 	
 	// ********************************************************************************
@@ -365,6 +369,39 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 	}
 	resizeWin();
 	winObj.onResize = resizeWin;
+	//-------------------------------------------------------------------------
+	var toClipbord = function(str)
+	{
+		var ob = Folder.temp.fullName;
+		var pa =  ob + "/tmp.txt";
+		var ff = new File(pa);
+		ff.encoding = "utf-8";
+		if (ff.open("w")){
+			try{
+				ff.write(str);
+			}finally{
+				ff.close();
+			}
+		}
+		//var cmd = "powershell set-clipboard -path \"" + ff.fsName + "\""
+		var cmd = "powershell set-clipboard -value \"" + str + "\""
+		alert(ff.exists==true);
+		if (ff.exists==true){
+			alert(cmd);
+			try{
+				var er = system.callSystem(cmd);
+				alert(er);
+			}catch(e){
+				alert(e.toString());
+			}
+		}
+
+	}
+	//-------------------------------------------------------------------------
+	btnCopy.onClick = function()
+	{
+		toClipbord(edRelative.text);
+	}
 	//-------------------------------------------------------------------------
 	if ( ( me instanceof Panel) == false){
 		winObj.center(); 
