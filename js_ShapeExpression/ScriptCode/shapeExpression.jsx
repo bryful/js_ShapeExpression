@@ -92,72 +92,7 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 		}
 		app.endUndoGroup();
 	}
-	// ********************************************************************************
-	/*
-		スライダーエフェクト[open]を追加
-	*/
-	// ********************************************************************************
-	var addSilderOpen = function()
-	{
-		var ret = false;
-		
-		var ac = getActiveComp();
-		if (ac==null) return ret;
 
-		var  lyr = null;
-		
-		if (ac.selectedLayers.length>0)
-		{
-			lyr = ac.selectedLayers[0];
-		}
-
-		
-		app.beginUndoGroup("addSilderOpen");
-		var efg = lyr.property("ADBE Effect Parade");
-		var fx = null;
-		if (efg.canAddProperty("ADBE Slider Control")){
-			fx = efg.addProperty("ADBE Slider Control");
-			if (fx!=null) {
-				fx.name = "open";
-				fx.enabled =false;
-				fx.property(1).setValue(100);
-			}
-		}
-
-	}
-	// ********************************************************************************
-	/*
-		スライダーエフェクト[open]を追加
-	*/
-	// ********************************************************************************
-	var addColor = function()
-	{
-		var ret = false;
-		
-		var ac = getActiveComp();
-		if (ac==null) return ret;
-
-		var  lyr = null;
-		
-		if (ac.selectedLayers.length>0)
-		{
-			lyr = ac.selectedLayers[0];
-		}
-
-		
-		app.beginUndoGroup("addSilderOpen");
-		var efg = lyr.property("ADBE Effect Parade");
-		var fx = null;
-		if (efg.canAddProperty("ADBE Color Control")){
-			fx = efg.addProperty("ADBE Color Control");
-			if (fx!=null) {
-				fx.name = "color";
-				fx.enabled =false;
-				fx.property(1).setValue([234/255,7/255,87/255,1]);
-			}
-		}
-
-	}
 		// ********************************************************************************
 	/*
 	*/
@@ -180,10 +115,6 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 	var ctrl_xx = 15;
 	var ctrl_yy = 15;
 	var btnCreateShape = winObj.add("button",    [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+ 25], "create ShapeLayer" );
-	ctrl_yy += 35;
-	var btnAddSliderOpen = winObj.add("button",    [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+ 25], "add Effect Slider \"open\"" );
-	ctrl_yy += 35;
-	var btnAddColor = winObj.add("button",    [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+ 25], "add Effect Color" );
 	ctrl_yy += 35;
 	var btnExpressin = winObj.add("button",    [ctrl_xx,ctrl_yy,ctrl_xx+ 470,ctrl_yy+ 25], "Expression value" );
 	ctrl_yy += 35;
@@ -210,8 +141,6 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 
 	// ********************************************************************************
 	cntrlTbl.push(btnCreateShape);
-	cntrlTbl.push(btnAddSliderOpen);
-	cntrlTbl.push(btnAddColor);
 	cntrlTbl.push(btnExpressin);
 	
 	cntrlTbl.push(btnGetTargetProperty);
@@ -375,8 +304,6 @@ thisProperty.popertYGroup(*)を使って相対パス指定をさせたい時が�
 	}
 	// ********************************************************************************
 	btnCreateShape.onClick = createShapeLayer;
-	btnAddSliderOpen.onClick = addSilderOpen;
-	btnAddColor.onClick = addColor;
 	btnExpressin.onClick = expressionOn;
 	btnGetTargetProperty.onClick = getTargetPath;
 	btnGetBaseProperty.onClick = getBasePath;
