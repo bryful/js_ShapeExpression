@@ -1,67 +1,46 @@
-﻿/*
-
-*/
-
+﻿
 (function(me){
 	//UIの配列
 	var cntrlTbl = [];
 	//ターゲット
 	var targetPath = [];
 	var basePath = [];
-	// ********************************************************************************
-	//prototype登録
-	String.prototype.trim = function(){
-		if (this=="" ) return ""
-		else return this.replace(/[\r\n]+$|^\s+|\s+$/g, "");
-	}
-	String.prototype.getParent = function(){
-		var r=this;var i=this.lastIndexOf("/");if(i>=0) r=this.substring(0,i);
-		return r;
-	}
-	//ファイル名のみ取り出す（拡張子付き）
-	String.prototype.getName = function(){
-		var r=this;var i=this.lastIndexOf("/");if(i>=0) r=this.substring(i+1);
-		return r;
-	}
-	//拡張子のみを取り出す。
-	String.prototype.getExt = function(){
-		var r="";var i=this.lastIndexOf(".");if (i>=0) r=this.substring(i);
-		return r;
-	}
-	//指定した書拡張子に変更（dotを必ず入れること）空文字を入れれば拡張子の消去。
-	String.prototype.changeExt=function(s){
-		var i=this.lastIndexOf(".");
-		if(i>=0){return this.substring(0,i)+s;}else{return this; }
-	}
-	//文字の置換。（全ての一致した部分を置換）
-	String.prototype.replaceAll=function(s,d){ return this.split(s).join(d);}
 
-	FootageItem.prototype.nameTrue = function(){ var b=this.name;this.name=""; var ret=this.name;this.name=b;return ret;}
-	
+	#include "json2.jsxinc"
+	#include "bryScriptLib.jsxinc"
+
+
 	//----------------------------------
-	var scriptName = File.decode($.fileName.getName().changeExt(""));	var aeclipPath = File.decode($.fileName.getParent()+"/aeclip.exe");
+	var scriptName = File.decode($.fileName.getName().changeExt(""));
+	var aeclipPath = File.decode($.fileName.getParent()+"/aeclip.exe");
+	var jsxinc = File.decode($.fileName.getParent()+"/json2.jsxinc");
+	//-------------------------------------------------------------------------
 	// ********************************************************************************
-	/*
-		アクティブなコンポジションを獲得
-	*/
-	// ********************************************************************************
-	var getActiveComp = function()
+	var toClipbord = function(str)
 	{
-		var ret = null;
-		ret = app.project.activeItem;
-		
-		if ( (ret instanceof CompItem)===false)
-		{
-			ret = null;
-			alert("コンポをアクティブにしてください！");
+		var ob = Folder.temp.fullName;
+		var pa =  ob + "/tmp.txt";
+		var ff = new File(pa);
+		ff.encoding = "utf-8";
+		if (ff.open("w")){
+			try{
+				ff.write(str);
+			}finally{
+				ff.close();
+			}
 		}
-		return ret;
+		var fclip = new File(aeclipPath);
+		var cmd =  "\"" + fclip.fsName +"\"" + " /c \"" + ff.fsName + "\"";
+		if (ff.exists==true){
+			try{
+				var er = system.callSystem(cmd);
+			}catch(e){
+				alert("ca" + e.toString());
+			}
+		}
+
 	}
-	// ********************************************************************************	var getPropertyGroup = function(cmp)	{		var ret = null;
-		if ((cmp instanceof CompItem)==false){			return ret;		}		var lyrs = cmp.selectedLayers;		if(lyrs.length!==1){			alert("レイヤを1個だけ選んでください");
-			return ret;
-		}		var props = lyrs[0].selectedProperties;		var pg = null;		if(props.length>=1){			for ( var i=0; i<props.length; i++)			{				if ((props[i].matchName=="ADBE Root Vectors Group")||(props[i].matchName=="ADBE Vector Group"))				{					pg = props[i];					break;				}			}			if(pg==null){				for ( var i=0; i<props.length; i++)				{					if (props[i] instanceof Property){						pg = props[i].parentProperty;						break;					} else{						pg = props[i].parentProperty;						break;					}				}			}		}else{			pg = lyrs[0].property("ADBE Root Vectors Group");		}		if(pg==null){			alert("グループかコンテンツを選んでください");
-		}else{			ret = pg;		}		return ret;	}
+
 	// ********************************************************************************
 	var createShapeLayer = function()
 	{
@@ -157,13 +136,17 @@
 		}
 		app.endUndoGroup();
 
-	}		// ********************************************************************************
+	}
+		// ********************************************************************************
 	/*
 		スライダーエフェクト[open]を追加
 	*/
 	// ********************************************************************************
 	var addExpCtrolAll = function()
-	{		function addSub(lyr,mn,na)		{			var efg = lyr.property("ADBE Effect Parade");
+	{
+		function addSub(lyr,mn,na)
+		{
+			var efg = lyr.property("ADBE Effect Parade");
 			var fx = null;
 			if (efg.canAddProperty(mn)){
 				fx = efg.addProperty(mn);
@@ -171,7 +154,9 @@
 					fx.name = na;
 					fx.enabled =false;
 				}
-			}			return fx;		}
+			}
+			return fx;
+		}
 		var ret = false;
 		
 		var ac = getActiveComp();
@@ -182,11 +167,21 @@
 		if (ac.selectedLayers.length>0)
 		{
 			lyr = ac.selectedLayers[0];
-			app.beginUndoGroup("とりあえず追加");			var fx = addSub(lyr,"ADBE Slider Control","open");			if (fx!=null) fx.property(1).setValue(100);			var fx = addSub(lyr,"ADBE Slider Control","close");			if (fx!=null) fx.property(1).setValue(100);			var fx = addSub(lyr,"ADBE Slider Control","width");			if (fx!=null) fx.property(1).setValue(1600);			var fx = addSub(lyr,"ADBE Slider Control","height");			if (fx!=null) fx.property(1).setValue(900);			app.endUndoGroup();
+			app.beginUndoGroup("とりあえず追加");
+			var fx = addSub(lyr,"ADBE Slider Control","open");
+			if (fx!=null) fx.property(1).setValue(100);
+			var fx = addSub(lyr,"ADBE Slider Control","close");
+			if (fx!=null) fx.property(1).setValue(100);
+			var fx = addSub(lyr,"ADBE Slider Control","width");
+			if (fx!=null) fx.property(1).setValue(1600);
+			var fx = addSub(lyr,"ADBE Slider Control","height");
+			if (fx!=null) fx.property(1).setValue(900);
+			app.endUndoGroup();
 		}
 
 
-	}	// ********************************************************************************
+	}
+	// ********************************************************************************
 	/*
 		
 	*/
@@ -196,7 +191,26 @@
 		
 		var ac = getActiveComp();
 		if (ac==null) return ret;
-		var pg = getPropertyGroup(ac);		alert(pg.name);		if (pg==null) return ret;				alert(pg.name);	}
+		//var pg = getPropertyGroup(ac);
+		//if (pg==null) return ret;
+		//alert("pg:" + pg.name);
+		
+		var ps = ac.selectedProperties;
+		if(ps.length>0)
+		{
+			var p = ps[0];
+			var aa = [];
+			do{
+				aa.push(  p.name + ": " + p.matchName);
+				p = p.parentProperty;
+			}while(p!=null);
+			aa.reverse();
+			var s = aa.join("\r\n");
+			alert(s);
+		}else{
+			laert("no");
+		}
+	}
 		// ********************************************************************************
 	/*
 	*/
@@ -213,6 +227,23 @@
 			}
 		}
 	}
+	// ********************************************************************************
+	//AEのプロパティ情報の最低量を読み込む
+	// ********************************************************************************
+	var getInfoSub = function(p)
+	{
+		var ret = {};
+		ret.name 			= p.name;
+		ret.matchName 		= p.matchName;
+		ret.propertyType 	= p.propertyType;
+		ret.propertyIndex 	= p.propertyIndex ;
+		if ("isModified" in p) 		ret.isModified = p.isModified;
+		if ("active" in p)			ret.active= p.active;
+		if ("enabled" in p) 		ret.enabled = p.enabled;
+		if ("numProperties" in p)	ret.numProperties 	= p.numProperties;
+		return ret;
+	}
+
 	// ********************************************************************************
 	var winObj = ( me instanceof Panel) ? me : new Window("palette", "ShapeExpression", [ 0,  0,  500,  480]  ,{resizeable:true, maximizeButton:true, minimizeButton:true});
 	// ********************************************************************************
@@ -236,7 +267,9 @@
 
 	// ********************************************************************************
 	cntrlTbl.push(btnCreateShape);
-	cntrlTbl.push(btnAddALL);	cntrlTbl.push(btnBaseShape);	cntrlTbl.push(btnAddSliderOpen);
+	cntrlTbl.push(btnAddALL);
+	cntrlTbl.push(btnBaseShape);
+	cntrlTbl.push(btnAddSliderOpen);
 	cntrlTbl.push(btnAddColor);
 	cntrlTbl.push(btnExpressin);
 
@@ -245,7 +278,8 @@
 	btnAddALL.onClick = addExpCtrolAll;
 	btnBaseShape.onClick = addBaseShape;
 	btnAddSliderOpen.onClick = addSilderOpen;
-	btnAddColor.onClick = addColor;	btnExpressin.onClick = expressionOn;
+	btnAddColor.onClick = addColor;
+	btnExpressin.onClick = expressionOn;
 	
 	// ********************************************************************************
 	var resizeWin = function()

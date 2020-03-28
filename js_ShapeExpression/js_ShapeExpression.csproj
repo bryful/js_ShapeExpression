@@ -83,7 +83,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ScriptCode\addShape.jsx" />
+    <Content Include="ScriptCode\bryScriptLib.jsxinc" />
+    <Content Include="ScriptCode\json2.jsxinc" />
     <Content Include="ScriptCode\shapeExpression.jsx" />
+    <Content Include="ScriptCode\Shape保存.jsx" />
     <Content Include="ScriptCode\スクリプト作成アシスタント.jsx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
